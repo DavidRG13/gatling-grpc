@@ -1,6 +1,8 @@
 package org.cruzcampo.gatling.grpc
 
+import io.gatling.core.action.Action
 import io.gatling.core.action.builder.ActionBuilder
+import io.gatling.core.check.Check
 import io.gatling.core.protocol.Protocols
 import io.gatling.core.structure.ScenarioContext
 import org.cruzcampo.gatling.grpc.actions.{GrpcAction, GrpcExecutableAction}
@@ -13,7 +15,7 @@ import org.cruzcampo.gatling.grpc.grpc.GrpcCheck
   * @param action - grpc action used for testing
   * @param checks - The way how response can be validated.
   */
-case class GrpcActionBuilder(action: GrpcExecutableAction, checks: List[GrpcCheck]) extends ActionBuilder {
+case class GrpcActionBuilder(action: GrpcExecutableAction, checks: List[Check[R]]) extends ActionBuilder {
 
   def grpcProtocol(protocols: Protocols) = {
     protocols.protocol[GrpcProtocol].getOrElse(throw new UnsupportedOperationException("gRPC protocol wasn't registered"))
