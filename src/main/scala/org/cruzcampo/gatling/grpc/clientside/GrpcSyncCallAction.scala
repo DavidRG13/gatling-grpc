@@ -1,4 +1,4 @@
-package org.cruzcampo.gatling.grpc.actions.impl
+package org.cruzcampo.gatling.grpc.clientside
 
 import org.cruzcampo.gatling.grpc.actions.GrpcExecutableAction
 

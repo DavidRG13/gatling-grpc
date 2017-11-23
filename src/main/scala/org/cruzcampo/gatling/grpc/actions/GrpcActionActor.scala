@@ -1,6 +1,7 @@
 package org.cruzcampo.gatling.grpc.actions
 
 import akka.actor.Props
+import com.google.protobuf.GeneratedMessageV3
 import io.gatling.commons.stats.{KO, OK}
 import io.gatling.commons.validation.Failure
 import io.gatling.core.action.{Action, ActionActor}
@@ -9,26 +10,25 @@ import io.gatling.core.session.Session
 import io.gatling.core.stats.StatsEngine
 import io.gatling.core.stats.message.ResponseTimings
 import org.cruzcampo.gatling.grpc.GrpcProtocol
-import org.cruzcampo.gatling.grpc.grpc.GrpcCheck
 
 /**
   * Execute tests and write results in stats engine
   */
 object GrpcActionActor {
-  def props(action: GrpcExecutableAction, checks: List[GrpcCheck], protocol: GrpcProtocol, statsEngine: StatsEngine, next: Action): Props = {
+  def props(action: GrpcExecutableAction, checks: List[Check[_ <: GeneratedMessageV3]], protocol: GrpcProtocol, statsEngine: StatsEngine, next: Action): Props = {
     Props(new GrpcActionActor(action, checks, protocol, statsEngine, next))
   }
 }
 
 class GrpcActionActor(action: GrpcExecutableAction,
-                      checks: List[GrpcCheck],
+                      checks: List[Check[_ <: GeneratedMessageV3]],
                       protocol: GrpcProtocol,
                       val statsEngine: StatsEngine,
                       val next: Action) extends ActionActor {
 
   override def execute(session: Session): Unit = {
     val startTime = System.currentTimeMillis()
-    var optionalResult: Option[Employee] = None
+    var optionalResult: Option[_ <: GeneratedMessageV3] = None
     var optionalThrowable : Option[Throwable] = None
 
     try {
@@ -50,7 +50,7 @@ class GrpcActionActor(action: GrpcExecutableAction,
       * @param maybeResult - response from the server that will be checked
       * @param error       - error in case it exists
       */
-    def logResult(maybeResult: Option[Employee], error: Option[Throwable] = None) = {
+    def logResult(maybeResult: Option[_ <: GeneratedMessageV3], error: Option[Throwable] = None) = {
       val endTime = System.currentTimeMillis()
       val timings = ResponseTimings(startTime, endTime)
 

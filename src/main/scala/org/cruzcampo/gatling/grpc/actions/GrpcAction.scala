@@ -1,6 +1,7 @@
 package org.cruzcampo.gatling.grpc.actions
 
 import akka.actor.ActorSystem
+import com.google.protobuf.GeneratedMessageV3
 import io.gatling.core.action.{Action, ExitableActorDelegatingAction}
 import io.gatling.core.check.Check
 import io.gatling.core.stats.StatsEngine
@@ -20,7 +21,7 @@ object GrpcAction extends NameGen {
     * @param next        - next Action to be executed
     * @return            - ExitableActorDelegatingAction
     */
-  def apply[R](action: GrpcExecutableAction, checks: List[Check[R]], protocol: GrpcProtocol, system: ActorSystem, statsEngine: StatsEngine, next: Action) = {
+  def apply[R](action: GrpcExecutableAction, checks: List[Check[_ <: GeneratedMessageV3]], protocol: GrpcProtocol, system: ActorSystem, statsEngine: StatsEngine, next: Action) = {
     val actor = system.actorOf(GrpcActionActor.props(action, checks, protocol, statsEngine, next))
     new ExitableActorDelegatingAction(genName("Grpc"), statsEngine, next, actor)
   }

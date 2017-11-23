@@ -1,5 +1,7 @@
 package org.cruzcampo.gatling.grpc.actions
 
+import com.google.protobuf.GeneratedMessageV3
+
 /**
   * Base trait which provide two type of calls sync and async one. It require to have name set.
   * Can be implemented as abstract class too.
@@ -8,5 +10,5 @@ package org.cruzcampo.gatling.grpc.actions
 trait GrpcExecutableAction {
   require(name.nonEmpty)
   def name: String
-  def executeSync: Option[Employee]
+  def executeSync: Option[_ <: GeneratedMessageV3]
 }
