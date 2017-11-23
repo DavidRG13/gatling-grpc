@@ -1,5 +1,8 @@
 package org.cruzcampo.gatling.grpc
 
+import io.gatling.core.config.GatlingConfiguration
+import io.gatling.core.protocol.{Protocol, ProtocolKey}
+
 object GrpcProtocol {
 
   val GrpcProtocolKey = new ProtocolKey {
@@ -17,6 +20,6 @@ object GrpcProtocol {
   }
 }
 
-case class GrpcProtocol() extends Protocol{
+case class GrpcProtocol() extends Protocol {
   type Components = GrpcComponents
 }

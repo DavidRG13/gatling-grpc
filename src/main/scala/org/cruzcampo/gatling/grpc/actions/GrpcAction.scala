@@ -1,5 +1,12 @@
 package org.cruzcampo.gatling.grpc.actions
 
+import akka.actor.ActorSystem
+import io.gatling.core.action.{Action, ExitableActorDelegatingAction}
+import io.gatling.core.check.Check
+import io.gatling.core.stats.StatsEngine
+import io.gatling.core.util.NameGen
+import org.cruzcampo.gatling.grpc.GrpcProtocol
+
 /**
   * Action that will create ActionActor and pass action class that will be triggered during the test
   */

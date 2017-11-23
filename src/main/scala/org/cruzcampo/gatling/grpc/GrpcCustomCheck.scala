@@ -1,11 +1,10 @@
 package org.cruzcampo.gatling.grpc
 
-import com.williamhill.gatling.grpc.GrpcCheck
-import com.williamhill.protobuf.EmployeeService.Employee
+import org.cruzcampo.gatling.grpc.grpc.GrpcCheck
+
 import io.gatling.commons.validation.{Failure, Validation}
 import io.gatling.core.check.CheckResult
 import io.gatling.core.session.Session
-
 import scala.collection.mutable
 
 /**

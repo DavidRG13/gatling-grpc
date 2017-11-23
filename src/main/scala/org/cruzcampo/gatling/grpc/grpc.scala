@@ -1,5 +1,7 @@
 package org.cruzcampo.gatling.grpc
 
+import io.gatling.core.check.{Check, Extender, Preparer}
+
 object grpc {
   type GrpcCheck = Check[Employee]
 
