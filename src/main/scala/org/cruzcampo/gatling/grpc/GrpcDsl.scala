@@ -2,7 +2,7 @@ package org.cruzcampo.gatling.grpc
 
 import io.gatling.core.action.builder.ActionBuilder
 
-trait GrpcDsl extends GrpcCheckSupport{
+trait GrpcDsl {
 
   val GRPC = GrpcProtocolBuilder
 

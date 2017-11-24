@@ -28,21 +28,15 @@ class GrpcActionActor(action: GrpcExecutableAction,
 
   override def execute(session: Session): Unit = {
     val startTime = System.currentTimeMillis()
-    var optionalResult: Option[_ <: GeneratedMessageV3] = None
-    var optionalThrowable : Option[Throwable] = None
 
     try {
       action match {
-        case act: GrpcExecutableAction =>
-          optionalResult = act.executeSync
-          logResult(optionalResult)
+        case act: GrpcExecutableAction => logResult(act.executeSync)
         case _ => throw new UnsupportedOperationException("Action is not supported")
       }
     }
     catch {
-      case t: Throwable =>
-        optionalThrowable = Some(t)
-        logResult(None, optionalThrowable)
+      case t: Throwable => logResult(None, Some(t))
     }
 
     /**
@@ -55,9 +49,8 @@ class GrpcActionActor(action: GrpcExecutableAction,
       val timings = ResponseTimings(startTime, endTime)
 
       if (error.isEmpty) {
-        val result = maybeResult.get
-        if (Option(result).nonEmpty) {
-          val (newSession, error) = Check.check(result, session, checks)
+        if (maybeResult.nonEmpty) {
+          val (newSession, error) = Check.check(maybeResult.get, session, checks)
           error match {
             case None =>
               statsEngine.logResponse(session, action.name, timings, OK, None, None)
